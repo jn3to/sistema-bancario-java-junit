@@ -2,10 +2,10 @@ package com.sistemabancario.model;
 
 /**
  * Representa uma instituição bancária com os seguintes requisitos:
- * 
- * - Ao cadastrar um banco, deve ser criada ao menos uma agência.
- * - Não deve-se excluir um banco se este tiver agências cadastradas.
- * 
+ *
+ * <p>- Ao cadastrar um banco, deve ser criada ao menos uma agência. - Não deve-se excluir um banco
+ * se este tiver agências cadastradas.
+ *
  * @author Manoel Campos da Silva Filho
  */
 public class Banco implements Cadastro {
@@ -15,20 +15,15 @@ public class Banco implements Cadastro {
 
     /**
      * Número único do banco.
-     * 
+     *
      * <ul>
-     *  <li>Deve ter exatamente 3 algarismos. Senão, uma exceção deve ser 
-     * lançada informando o problema. (R01)</li>
-     *  <li>
-     *      O tipo é String para permitir restringir o total de caracteres, mas deve
-     *      ser informado um número válido (somente dígitos de 0 a 9). Senão for um
-     *      número válido, uma exceção deve ser lançada informando o problema. 
-     *  </li>
-     *  <li>
-     *      É um atributo obrigatório, não podendo ser nulo nem vazio. 
-     *      Se não for preenchido, uma exceção deve ser lançada informando o problema. 
-     *      (R02)
-     *  </li>
+     *   <li>Deve ter exatamente 3 algarismos. Senão, uma exceção deve ser lançada informando o
+     *       problema. (R01)
+     *   <li>O tipo é String para permitir restringir o total de caracteres, mas deve ser informado
+     *       um número válido (somente dígitos de 0 a 9). Senão for um número válido, uma exceção
+     *       deve ser lançada informando o problema.
+     *   <li>É um atributo obrigatório, não podendo ser nulo nem vazio. Se não for preenchido, uma
+     *       exceção deve ser lançada informando o problema. (R02)
      * </ul>
      */
     private String numero;
@@ -67,5 +62,4 @@ public class Banco implements Cadastro {
     public void setNumero(String numero) {
         this.numero = numero;
     }
-
 }
