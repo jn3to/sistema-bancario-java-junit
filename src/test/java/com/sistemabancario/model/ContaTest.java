@@ -2,6 +2,7 @@ package com.sistemabancario.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class ContaTest {
@@ -59,5 +60,88 @@ public class ContaTest {
     void testHistoricoNotNull() {
         final Conta instance = new Conta();
         assertNotNull(instance.getMovimentacoes());
+    }
+
+    @Test
+    void testGetSaldoTotal() {
+        final Conta instance = new Conta();
+        instance.setEspecial(true);
+        final double limite = 500;
+        final double esperado = limite;
+        instance.setLimite(limite);
+        final double obtido = instance.getSaldoTotal();
+        assertEquals(esperado, obtido);
+    }
+
+    @Test
+    void testDepositoDinheiro() {
+        final Conta instance = new Conta();
+        final double limite = 500.6, deposito = 500.8, esperado = 1001.4;
+        instance.setEspecial(true);
+        instance.setLimite(limite);
+        instance.depositoDinheiro(deposito);
+        final double obtido = instance.getSaldoTotal();
+        assertEquals(esperado, obtido, 0.001);
+    }
+
+    @Test
+    void testDepositoDinheiroValorNegativo() {
+        final Conta instance = new Conta();
+        final double deposito = -842.9;
+        assertThrows(IllegalArgumentException.class, () -> instance.depositoDinheiro(deposito));
+        final double obtido = instance.getSaldoTotal();
+        assertNotEquals(deposito, obtido, 0.001);
+    }
+
+    @Test
+    void testDepositoDinheiroValorZerado() {
+        final Conta instance = new Conta();
+        final double deposito = 0;
+        assertThrows(IllegalArgumentException.class, () -> instance.depositoDinheiro(deposito));
+    }
+
+    @Test
+    void testDepositoDinheiroMovimentacaoTipoCredito() {
+        final Conta instance = new Conta();
+        final char esperado = 'C';
+        final double deposito = 200;
+        instance.depositoDinheiro(deposito);
+        final List<Movimentacao> movimentacoes = instance.getMovimentacoes();
+        final Movimentacao ultimaMovimentacao = movimentacoes.get(movimentacoes.size() - 1);
+        final double obtido = ultimaMovimentacao.getTipo();
+        assertEquals(esperado, obtido);
+    }
+
+    @Test
+    void testDepositoDinheiroMovimentacaoConfirmada() {
+        final Conta instance = new Conta();
+        final double deposito = 234;
+        instance.depositoDinheiro(deposito);
+        final List<Movimentacao> movimentacoes = instance.getMovimentacoes();
+        final Movimentacao ultimaMovimentacao = movimentacoes.get(movimentacoes.size() - 1);
+        final boolean obtido = ultimaMovimentacao.isConfirmada();
+        assertTrue(obtido);
+    }
+
+    @Test
+    void testDepositoDinheiroMovimentacaoValorAtribuido() {
+        final Conta instance = new Conta();
+        final double deposito = 40.8;
+        final double esperado = deposito;
+        instance.depositoDinheiro(deposito);
+        final List<Movimentacao> movimentacoes = instance.getMovimentacoes();
+        final Movimentacao ultimaMovimentacao = movimentacoes.get(movimentacoes.size() - 1);
+        final double obtido = ultimaMovimentacao.getValor();
+        assertEquals(esperado, obtido);
+    }
+
+    @Test
+    void testDepositoDinheiroMovimentacaoRegistrada() {
+        final Conta instance = new Conta();
+        final double deposito = 40.8;
+        final int esperado = 1;
+        instance.depositoDinheiro(deposito);
+        final int obtido = instance.getMovimentacoes().size();
+        assertEquals(esperado, obtido);
     }
 }
