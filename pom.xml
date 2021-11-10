@@ -51,6 +51,13 @@
               <goal>report</goal>
             </goals>
           </execution>
+          <execution>
+            <id>jacoco-report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <phase>test</phase>
+          </execution>
         </executions>
       </plugin>
       <plugin>
