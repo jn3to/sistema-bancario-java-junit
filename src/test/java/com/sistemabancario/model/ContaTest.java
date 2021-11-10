@@ -144,4 +144,29 @@ public class ContaTest {
         final int obtido = instance.getMovimentacoes().size();
         assertEquals(esperado, obtido);
     }
+
+    @Test
+    void testAddMovimentacaoCredito() {
+        final Conta instance = new Conta();
+        final Movimentacao movimentacao = new Movimentacao(instance);
+        movimentacao.setConfirmada(true);
+        movimentacao.setTipo('C');
+        final double esperado = 100.50;
+        movimentacao.setValor(esperado);
+        instance.addMovimentacao(movimentacao);
+        assertEquals(esperado, instance.getSaldoTotal());
+    }
+
+    @Test
+    void testAddMovimentacaoDebito() {
+        final Conta instance = new Conta();
+        final Movimentacao movimentacao = new Movimentacao(instance);
+        movimentacao.setConfirmada(true);
+        movimentacao.setTipo('D');
+        final double valor = 100.50;
+        final double esperado = -valor;
+        movimentacao.setValor(valor);
+        instance.addMovimentacao(movimentacao);
+        assertEquals(esperado, instance.getSaldoTotal());
+    }
 }
